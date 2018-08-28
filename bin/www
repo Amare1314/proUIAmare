@@ -1,0 +1,155 @@
+#!/usr/bin/env node
+
+/**
+ * Module dependencies.
+ */
+
+var app = require('../app');
+var debug = require('debug')('express:server');
+var http = require('http');
+
+/**
+ * Get port from environment and store in Express.
+ */
+
+var port = normalizePort(process.env.PORT || '3000');
+app.set('port', port);
+
+/**
+ * Create HTTP server.
+ */
+
+var server = http.createServer(app);
+
+/**
+ * Listen on provided port, on all network interfaces.
+ */
+
+server.listen(port);
+server.on('error', onError);
+server.on('listening', onListening);
+
+/**
+ * Normalize a port into a number, string, or false.
+ */
+
+function normalizePort(val) {
+  var port = parseInt(val, 10);
+
+  if (isNaN(port)) {
+    // named pipe
+    return val;
+  }
+
+  if (port >= 0) {
+    // port number
+    return port;
+  }
+
+  return false;
+}
+
+/**
+ * Event listener for HTTP server "error" event.
+ */
+
+function onError(error) {
+  if (error.syscall !== 'listen') {
+    throw error;
+  }
+
+  var bind = typeof port === 'string'
+    ? 'Pipe ' + port
+    : 'Port ' + port;
+
+  // handle specific listen errors with friendly messages
+  switch (error.code) {
+    case 'EACCES':
+      console.error(bind + ' requires elevated privileges');
+      process.exit(1);
+      break;
+    case 'EADDRINUSE':
+      console.error(bind + ' is already in use');
+      process.exit(1);
+      break;
+    default:
+      throw error;
+  }
+}
+
+/**
+ * Event listener for HTTP server "listening" event.
+ */
+
+function onListening() {
+  var addr = server.address();
+  var bind = typeof addr === 'string'
+    ? 'pipe ' + addr
+    : 'port ' + addr.port;
+  debug('Listening on ' + bind);
+}
+
+
+
+var socketPackage = require('socket.io');   //引入包
+var io = socketPackage(server);             //针对 http server 生成socket.IO实例对象
+
+//socket连接
+io.on( "connection", function( socket ){
+    console.log( "一个新连接" );
+    socket.emit('msg', '欢迎来到尚硅谷');
+
+    socket.on('msg', function (data) {
+        console.log(data);
+        var answer = findAnswer(data);
+        if(null !== answer){
+            socket.emit('msg', answer);
+        }else {
+            socket.emit('msg', data);
+        }
+    });
+});
+
+
+function findAnswer(data) {
+    var answer = null;
+    console.log(data, /^.*尚硅谷.*/.test(data));
+    if( /^.*尚硅谷.*/.test(data) ){
+        answer = '尚硅谷，让天下没有难学的技术';
+    }else {
+
+        switch (data){
+            case '白日依山尽':
+                answer =  '黄河入海流';
+                break;
+            case '天王盖地虎':
+                answer =  '宝塔镇河妖';
+                break;
+            case '你好':
+                answer =  '你好，欢迎参加尚硅谷直播课堂';
+                break;
+            case '你是':
+                answer =  '亲，我是上课所需的测试机器人，不许调戏我！';
+                break;
+            case '活着有什么意义':
+                answer =  '这个世界活着的意义就是你去过多少地方，见过多少人';
+                break;
+            case '吃了吗':
+                answer =  '吃了，你呢？';
+                break;
+            case '你是男的还是女的？':
+                answer =  '你猜呢...';
+                break;
+            case '我爱你':
+                answer =  '别闹...淘气!!!';
+                break;
+             case 'hello world':
+                    answer =  '世界你好';
+                    break;
+            default:
+                answer = null;
+        }
+    }
+
+    return answer;
+}
