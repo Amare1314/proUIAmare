@@ -5,6 +5,8 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
+global.dbconnect = "mongodb://localhost:27017/proUIAmare";
+
 var index = require('./routes/index');
 var users = require('./routes/users');
 
