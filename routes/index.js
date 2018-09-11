@@ -10,25 +10,33 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
-router.post('/login', function (req, res, next) {
-  var username = req.body.login_username;
-  var password = req.body.login_password;
+router.post('/loginVerify', function (req, res, next) {
+  var username = req.body.username;
+  var password = req.body.password;
   var whereStr = { "username": username, "password": password };  // 查询条件
 
   mongoose.connect(global.dbconnect);
   var db = mongoose.connection;
   db.on("error", console.error.bind(console, '连接失败'));
-  db.once("open", function(){
+  db.once("open", function () {
     User.find(whereStr, function (err, result) {
       if (err) throw err;
-      if(result.length > 0){
-        res.redirect('/index.html');
+      if (result.length > 0) {
+        console.log("zjjjjjjjjjjjj-------------" + result);
+        // res.send("1");
+        res.json({ success: 1 });//请求成功,验证成功
       } else {
-        res.redirect('/login_full.html');
+        console.log("zjjjjjjjjjjjj++++++++++++++" + result);
+        res.json({ success: 2 });//请求成功,验证失败
+        // res.redirect('/login_full.html');
       }
     });
   });
 
+});
+
+router.post('/login', function (req, res, next) {
+  res.redirect('/index.html');
 });
 
 router.post('/register', function (req, res, next) {

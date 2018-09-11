@@ -43,6 +43,26 @@ var Login = function() {
                 switchView(formReminder, formLogin, '');
             });
 
+            $('#loginBtn').click(function () {
+                alert(location.host);
+                $.ajax({
+                    type: "POST",
+                    url: "http://localhost:3000/loginVerify",
+                    data: { username: $("#login-username").val(), password: $("#login-password").val() },
+                    dataType: "json",
+                    success: function (data) {
+                        if(data.success == "1"){
+                            $("#form-login").submit();
+                        } else if (data.success == "2"){
+                            alert("用户名或密码错误");
+                        }
+                    },
+                    error: function (e) {
+                        console.log(e);
+                    }
+                }); 
+            });
+
             // If the link includes the hashtag 'register', show the register form instead of login
             if (window.location.hash === '#register') {
                 formLogin.hide();
