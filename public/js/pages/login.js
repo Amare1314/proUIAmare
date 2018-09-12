@@ -54,11 +54,17 @@ var Login = function() {
 
             // 密码输入框发生改变后 去掉用户名和密码的错误提示
             $("#login-password").keyup(function () {
-                $(".gi-user").css('color', '');
+                $("#login-username").parent().find(".gi-user").css('color', '');
                 $("#login-username").parent().parent().find(".check-u").remove();
 
-                $(".gi-asterisk").css('color', '');
+                $("#login-password").parent().find(".gi-asterisk").css('color', '');
                 $("#login-password").parent().parent().find(".check-p").remove();
+            });
+
+            // 用户名输入框发生改变后 去掉用户名已存在的提示
+            $("#register-username").keyup(function () {
+                $("#register-username").parent().find(".gi-user").css('color', '');
+                $("#register-username").parent().parent().find(".check-u").remove();
             });
 
             $('#loginBtn').click(function () {
@@ -79,11 +85,11 @@ var Login = function() {
                                 $("#login-username").focus();
 
                                 // 当用户名密码不正确时 给出 提示语句 并将图标 标红
-                                $(".gi-user").css('color', '#e74c3c');
+                                $("#login-username").parent().find(".gi-user").css('color', '#e74c3c');
                                 $("#login-username").parent().parent().find(".check-u").remove();
                                 $("#login-username").parent().after('<div for="login-username" class="animation-slideDown check-u" style="color: #e74c3c;">用户名或者密码不正确</div>');
 
-                                $(".gi-asterisk").css('color', '#e74c3c');
+                                $("#login-password").parent().find(".gi-asterisk").css('color', '#e74c3c');
                                 $("#login-password").parent().parent().find(".check-p").remove();
                                 $("#login-password").parent().after('<div for="login-password" class="animation-slideDown check-p" style="color: #e74c3c;">用户名或者密码不正确</div>');
                             }
@@ -92,6 +98,39 @@ var Login = function() {
                             console.log(e);
                         }
                     }); 
+                }
+            });
+
+            $('#registerBtn').click(function () {
+                var username = $("#register-username").val(), email = $("#register-email").val(), password = $("#register-password").val(), 
+                    passwordVerify = $("#register-password-verify").val();
+
+                // 判断用户名密码 是否为空  不为空才提交到后端验证
+                if (username == "" || email == "" || password == "" || passwordVerify == "") {
+                    $("#form-register").submit();
+                } else {
+                    $.ajax({
+                        type: "POST",
+                        url: "http://" + location.host + "/registerVerify",
+                        data: { username: username, email: email, password: password },
+                        dataType: "json",
+                        success: function (data) {
+                            if (data.success == "1") {
+                                $("#form-register").submit();
+                            } else if (data.success == "2") {
+                                $("#register-username").val("");
+                                $("#register-username").focus();
+
+                                // 当用户名已经存在时 给出 提示语句 并将图标 标红
+                                $("#register-username").parent().find(".gi-user").css('color', '#e74c3c');
+                                $("#register-username").parent().parent().find(".check-u").remove();
+                                $("#register-username").parent().after('<div for="register-username" class="animation-slideDown check-u" style="color: #e74c3c;">用户名已存在,请重新输入</div>');
+                            }
+                        },
+                        error: function (e) {
+                            console.log(e);
+                        }
+                    });
                 }
             });
 
