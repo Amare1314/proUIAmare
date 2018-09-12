@@ -22,7 +22,7 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public'), { index: "login_full.html" }));
+app.use(express.static(path.join(__dirname, 'public'), { index: "login.html" }));
 // app.use(express.static(__dirname + "/public", { index: "login.html" }));
 
 

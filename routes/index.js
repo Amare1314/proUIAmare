@@ -25,8 +25,6 @@ router.post('/loginVerify', function (req, res, next) {
         res.json({ success: 1 , data: "登录成功"});//请求成功,验证成功
       } else {
         res.json({ success: 2, data: "用户名不存在,或者密码错误"});//请求成功,验证失败
-        // res.redirect('/login_full.html');
-        // res.redirect('/login_full.html');
       }
     });
   });
@@ -50,13 +48,13 @@ router.post('/register', function (req, res, next) {
     User.find(whereStr, function (err, result) {
       if (err) throw err;
       if (result.length > 0) {
-        res.redirect('/login_full.html#register');
+        res.redirect('/login.html#register');
       } else {
         var user = new User({ username: username, email: email, password: password });
         user.save(function(err, user){
           if (err) return console.error(err);
         });
-        res.redirect('/login_full.html');
+        res.redirect('/login.html');
       }
     });
   });
@@ -77,7 +75,7 @@ router.post('/reminder', function (req, res, next) {
       console.log('The raw response from Mongo was ', raw);
     });
   });
-  res.redirect('/login_full.html');
+  res.redirect('/login.html');
 });
 
 module.exports = router;

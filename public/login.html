@@ -44,30 +44,28 @@
         <script src="js/vendor/modernizr-2.7.1-respond-1.4.2.min.js"></script>
     </head>
     <body>
-        <!-- Login Background -->
-        <div id="login-background">
-            <!-- For best results use an image with a resolution of 2560x400 pixels (prefer a blurred image for smaller file size) -->
-            <img src="img/placeholders/headers/login_header.jpg" alt="Login Background" class="animation-pulseSlow">
-        </div>
-        <!-- END Login Background -->
+        <!-- Login Full Background -->
+        <!-- For best results use an image with a resolution of 1280x1280 pixels (prefer a blurred image for smaller file size) -->
+        <img src="img/placeholders/backgrounds/login_full_bg.jpg" alt="Login Full Background" class="full-bg animation-pulseSlow">
+        <!-- END Login Full Background -->
 
         <!-- Login Container -->
         <div id="login-container" class="animation-fadeIn">
             <!-- Login Title -->
             <div class="login-title text-center">
-                <h1><i class="gi gi-flash"></i> <strong>ProUI</strong><br><small>Please <strong>Login</strong> or <strong>Register</strong></small></h1>
+                <h1><i class="gi gi-flash"></i> <strong>ProUIAmare</strong><br><small>Please <strong>Login</strong> or <strong>Register</strong></small></h1>
             </div>
             <!-- END Login Title -->
 
             <!-- Login Block -->
             <div class="block push-bit">
                 <!-- Login Form -->
-                <form action="index.html" method="post" id="form-login" class="form-horizontal form-bordered form-control-borderless">
+                <form action="/login" method="post" id="form-login" class="form-horizontal form-bordered form-control-borderless">
                     <div class="form-group">
                         <div class="col-xs-12">
                             <div class="input-group">
-                                <span class="input-group-addon"><i class="gi gi-envelope"></i></span>
-                                <input type="text" id="login-email" name="login-email" class="form-control input-lg" placeholder="Email">
+                                <span class="input-group-addon"><i class="gi gi-user"></i></span>
+                                <input type="text" id="login-username" name="login_username" autocomplete="off" class="form-control input-lg" placeholder="Username">
                             </div>
                         </div>
                     </div>
@@ -75,71 +73,68 @@
                         <div class="col-xs-12">
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="gi gi-asterisk"></i></span>
-                                <input type="password" id="login-password" name="login-password" class="form-control input-lg" placeholder="Password">
+                                <input type="password" id="login-password" name="login_password" class="form-control input-lg" placeholder="Password">
                             </div>
                         </div>
                     </div>
                     <div class="form-group form-actions">
                         <div class="col-xs-4">
                             <label class="switch switch-primary" data-toggle="tooltip" title="Remember Me?">
-                                <input type="checkbox" id="login-remember-me" name="login-remember-me" checked>
+                                <input type="checkbox" id="remember-me" name="remember_me" checked>
                                 <span></span>
                             </label>
                         </div>
                         <div class="col-xs-8 text-right">
-                            <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-angle-right"></i> Login to Dashboard</button>
+                            <button type="button" id="loginBtn" class="btn btn-sm btn-primary"><i class="fa fa-angle-right"></i>登录</button>
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="col-xs-12 text-center">
-                            <a href="javascript:void(0)" id="link-reminder-login"><small>Forgot password?</small></a> -
-                            <a href="javascript:void(0)" id="link-register-login"><small>Create a new account</small></a>
+                            <a href="javascript:void(0)" id="link-reminder-login"><small>忘记密码?</small></a> -
+                            <a href="javascript:void(0)" id="link-register-login"><small>注册新账户</small></a>
                         </div>
                     </div>
                 </form>
                 <!-- END Login Form -->
 
                 <!-- Reminder Form -->
-                <form action="login.html#reminder" method="post" id="form-reminder" class="form-horizontal form-bordered form-control-borderless display-none">
+                <form action="/reminder" method="post" id="form-reminder" class="form-horizontal form-bordered form-control-borderless display-none">
                     <div class="form-group">
                         <div class="col-xs-12">
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="gi gi-envelope"></i></span>
-                                <input type="text" id="reminder-email" name="reminder-email" class="form-control input-lg" placeholder="Email">
+                                <input type="text" id="reminder-email" name="reminder_email" class="form-control input-lg" placeholder="Email">
                             </div>
                         </div>
                     </div>
                     <div class="form-group form-actions">
                         <div class="col-xs-12 text-right">
-                            <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-angle-right"></i> Reset Password</button>
+                            <button type="submit" class="btn btn-sm btn-primary" title="密码重置后为123456"><i class="fa fa-angle-right"></i> 重置密码</button>
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="col-xs-12 text-center">
-                            <small>Did you remember your password?</small> <a href="javascript:void(0)" id="link-reminder"><small>Login</small></a>
+                            <small>您记得密码?</small> <a href="javascript:void(0)" id="link-reminder"><small>登录</small></a>
                         </div>
                     </div>
                 </form>
                 <!-- END Reminder Form -->
 
                 <!-- Register Form -->
-                <form action="login.html#register" method="post" id="form-register" class="form-horizontal form-bordered form-control-borderless display-none">
+                <form action="/register" method="post" id="form-register" class="form-horizontal form-bordered form-control-borderless display-none">
                     <div class="form-group">
                         <div class="col-xs-6">
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="gi gi-user"></i></span>
-                                <input type="text" id="register-firstname" name="register-firstname" class="form-control input-lg" placeholder="Firstname">
+                                <input type="text" id="register-username" name="register_username" class="form-control input-lg" placeholder="Username">
                             </div>
-                        </div>
-                        <div class="col-xs-6">
-                            <input type="text" id="register-lastname" name="register-lastname" class="form-control input-lg" placeholder="Lastname">
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="col-xs-12">
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="gi gi-envelope"></i></span>
-                                <input type="text" id="register-email" name="register-email" class="form-control input-lg" placeholder="Email">
+                                <input type="text" id="register-email" name="register_email" class="form-control input-lg" placeholder="Email">
                             </div>
                         </div>
                     </div>
@@ -147,7 +142,7 @@
                         <div class="col-xs-12">
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="gi gi-asterisk"></i></span>
-                                <input type="password" id="register-password" name="register-password" class="form-control input-lg" placeholder="Password">
+                                <input type="password" id="register-password" name="register_password" class="form-control input-lg" placeholder="Password">
                             </div>
                         </div>
                     </div>
@@ -155,37 +150,31 @@
                         <div class="col-xs-12">
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="gi gi-asterisk"></i></span>
-                                <input type="password" id="register-password-verify" name="register-password-verify" class="form-control input-lg" placeholder="Verify Password">
+                                <input type="password" id="register-password-verify" name="register_password_verify" class="form-control input-lg" placeholder="Verify Password">
                             </div>
                         </div>
                     </div>
                     <div class="form-group form-actions">
                         <div class="col-xs-6">
-                            <a href="#modal-terms" data-toggle="modal" class="register-terms">Terms</a>
+                            <a href="#modal-terms" data-toggle="modal" class="register-terms">条款</a>
                             <label class="switch switch-primary" data-toggle="tooltip" title="Agree to the terms">
-                                <input type="checkbox" id="register-terms" name="register-terms">
+                                <input type="checkbox" id="register-terms" name="register_terms">
                                 <span></span>
                             </label>
                         </div>
                         <div class="col-xs-6 text-right">
-                            <button type="submit" class="btn btn-sm btn-success"><i class="fa fa-plus"></i> Register Account</button>
+                            <button type="submit" class="btn btn-sm btn-success"><i class="fa fa-plus"></i> 注册账户</button>
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="col-xs-12 text-center">
-                            <small>Do you have an account?</small> <a href="javascript:void(0)" id="link-register"><small>Login</small></a>
+                            <small>已经拥有账户?</small> <a href="javascript:void(0)" id="link-register"><small>登录</small></a>
                         </div>
                     </div>
                 </form>
                 <!-- END Register Form -->
             </div>
             <!-- END Login Block -->
-
-            <!-- Footer -->
-            <footer class="text-muted text-center">
-                <small><span id="year-copy"></span> &copy; <a href="http://goo.gl/TDOSuC" target="_blank">ProUI 2.0</a></small>
-            </footer>
-            <!-- END Footer -->
         </div>
         <!-- END Login Container -->
 
