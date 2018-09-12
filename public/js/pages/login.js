@@ -43,24 +43,52 @@ var Login = function() {
                 switchView(formReminder, formLogin, '');
             });
 
+            $("#login-username").keyup(function () {
+                $(".gi-user").css('color', '');
+                $("#login-username").parent().parent().find(".check-u-p").remove();
+
+                $(".gi-asterisk").css('color', '');
+                $("#login-password").parent().parent().find(".check-u-p").remove();
+            });
+
+            $("#login-password").keyup(function () {
+                $(".gi-user").css('color', '');
+                $("#login-username").parent().parent().find(".check-u-p").remove();
+                
+                $(".gi-asterisk").css('color', '');
+                $("#login-password").parent().parent().find(".check-u-p").remove();
+            });
+
             $('#loginBtn').click(function () {
-                alert(location.host);
-                $.ajax({
-                    type: "POST",
-                    url: "http://localhost:3000/loginVerify",
-                    data: { username: $("#login-username").val(), password: $("#login-password").val() },
-                    dataType: "json",
-                    success: function (data) {
-                        if(data.success == "1"){
-                            $("#form-login").submit();
-                        } else if (data.success == "2"){
-                            alert("用户名或密码错误");
+                if ($("#login-username").val() == "" || $("#login-password").val() == ""){
+                    $("#form-login").submit();
+                }else{
+                    $.ajax({
+                        type: "POST",
+                        url: "http://" + location.host + "/loginVerify",
+                        data: { username: $("#login-username").val(), password: $("#login-password").val() },
+                        dataType: "json",
+                        success: function (data) {
+                            if (data.success == "1") {
+                                $("#form-login").submit();
+                            } else if (data.success == "2") {
+                                // alert(data.data);
+                                $("#login-username").focus();
+
+                                $(".gi-user").css('color', '#e74c3c');
+                                $("#login-username").parent().parent().find(".check-u-p").remove();
+                                $("#login-username").parent().after('<div for="login-username" class="animation-slideDown check-u-p" style="color: #e74c3c;">用户名或者密码不正确</div>');
+
+                                $(".gi-asterisk").css('color', '#e74c3c');
+                                $("#login-password").parent().parent().find(".check-u-p").remove();
+                                $("#login-password").parent().after('<div for="login-password" class="animation-slideDown check-u-p" style="color: #e74c3c;">用户名或者密码不正确</div>');
+                            }
+                        },
+                        error: function (e) {
+                            console.log(e);
                         }
-                    },
-                    error: function (e) {
-                        console.log(e);
-                    }
-                }); 
+                    }); 
+                }
             });
 
             // If the link includes the hashtag 'register', show the register form instead of login

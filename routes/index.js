@@ -22,12 +22,10 @@ router.post('/loginVerify', function (req, res, next) {
     User.find(whereStr, function (err, result) {
       if (err) throw err;
       if (result.length > 0) {
-        console.log("zjjjjjjjjjjjj-------------" + result);
-        // res.send("1");
-        res.json({ success: 1 });//请求成功,验证成功
+        res.json({ success: 1 , data: "登录成功"});//请求成功,验证成功
       } else {
-        console.log("zjjjjjjjjjjjj++++++++++++++" + result);
-        res.json({ success: 2 });//请求成功,验证失败
+        res.json({ success: 2, data: "用户名不存在,或者密码错误"});//请求成功,验证失败
+        // res.redirect('/login_full.html');
         // res.redirect('/login_full.html');
       }
     });
