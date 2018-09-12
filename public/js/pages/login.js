@@ -43,26 +43,30 @@ var Login = function() {
                 switchView(formReminder, formLogin, '');
             });
 
+            // 用户名输入框发生改变后 去掉用户名和密码的错误提示
             $("#login-username").keyup(function () {
                 $(".gi-user").css('color', '');
-                $("#login-username").parent().parent().find(".check-u-p").remove();
+                $("#login-username").parent().parent().find(".check-u").remove();
 
                 $(".gi-asterisk").css('color', '');
-                $("#login-password").parent().parent().find(".check-u-p").remove();
+                $("#login-password").parent().parent().find(".check-p").remove();
             });
 
+            // 密码输入框发生改变后 去掉用户名和密码的错误提示
             $("#login-password").keyup(function () {
                 $(".gi-user").css('color', '');
-                $("#login-username").parent().parent().find(".check-u-p").remove();
-                
+                $("#login-username").parent().parent().find(".check-u").remove();
+
                 $(".gi-asterisk").css('color', '');
-                $("#login-password").parent().parent().find(".check-u-p").remove();
+                $("#login-password").parent().parent().find(".check-p").remove();
             });
 
             $('#loginBtn').click(function () {
+
+                // 判断用户名密码 是否为空  不为空才提交到后端验证
                 if ($("#login-username").val() == "" || $("#login-password").val() == ""){
                     $("#form-login").submit();
-                }else{
+                } else {
                     $.ajax({
                         type: "POST",
                         url: "http://" + location.host + "/loginVerify",
@@ -72,16 +76,16 @@ var Login = function() {
                             if (data.success == "1") {
                                 $("#form-login").submit();
                             } else if (data.success == "2") {
-                                // alert(data.data);
                                 $("#login-username").focus();
 
+                                // 当用户名密码不正确时 给出 提示语句 并将图标 标红
                                 $(".gi-user").css('color', '#e74c3c');
-                                $("#login-username").parent().parent().find(".check-u-p").remove();
-                                $("#login-username").parent().after('<div for="login-username" class="animation-slideDown check-u-p" style="color: #e74c3c;">用户名或者密码不正确</div>');
+                                $("#login-username").parent().parent().find(".check-u").remove();
+                                $("#login-username").parent().after('<div for="login-username" class="animation-slideDown check-u" style="color: #e74c3c;">用户名或者密码不正确</div>');
 
                                 $(".gi-asterisk").css('color', '#e74c3c');
-                                $("#login-password").parent().parent().find(".check-u-p").remove();
-                                $("#login-password").parent().after('<div for="login-password" class="animation-slideDown check-u-p" style="color: #e74c3c;">用户名或者密码不正确</div>');
+                                $("#login-password").parent().parent().find(".check-p").remove();
+                                $("#login-password").parent().after('<div for="login-password" class="animation-slideDown check-p" style="color: #e74c3c;">用户名或者密码不正确</div>');
                             }
                         },
                         error: function (e) {
